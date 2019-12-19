@@ -6,13 +6,14 @@ import br.com.cov.webservice.model.domain.Produto;
 import java.util.List;
 
 public class ProdutoService {
+
     private ProdutoDAO dao = new ProdutoDAO();
 
     public List<Produto> getProdutos() {
         return dao.getAll();
     }
 
-    public Produto getProdutos(Long id) {
+    public Produto getProduto(Long id) {
         return dao.getById(id);
     }
 
@@ -20,7 +21,7 @@ public class ProdutoService {
         return dao.save(produto);
     }
 
-    public Produto updateProduro(Produto produto) {
+    public Produto updateProduto(Produto produto) {
         return dao.update(produto);
     }
 
@@ -35,4 +36,6 @@ public class ProdutoService {
     public List<Produto> getProdutoByName(String name) {
         return dao.getByName(name);
     }
+
+
 }
