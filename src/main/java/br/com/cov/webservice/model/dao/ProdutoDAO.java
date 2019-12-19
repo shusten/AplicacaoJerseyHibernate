@@ -1,8 +1,8 @@
 package br.com.cov.webservice.model.dao;
 
 import br.com.cov.webservice.model.domain.Produto;
-import br.com.cov.webservice.model.exceptions.DAOException;
-import br.com.cov.webservice.model.exceptions.ErrorCode;
+import br.com.cov.webservice.exceptions.DAOException;
+import br.com.cov.webservice.exceptions.ErrorCode;
 
 import javax.persistence.EntityManager;
 import java.util.List;
