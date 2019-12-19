@@ -1,4 +1,4 @@
-package br.com.cov.webservice.model.exceptions;
+package br.com.cov.webservice.exceptions;
 
 public class DAOException extends RuntimeException {
 
