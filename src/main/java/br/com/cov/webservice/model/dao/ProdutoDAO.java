@@ -22,6 +22,7 @@ public class ProdutoDAO {
         return produtos;
     }
 
+
     public Produto getById(long id) {
         EntityManager em = JPAUtil.getEntityManager();
         Produto produto = null;
@@ -42,6 +43,7 @@ public class ProdutoDAO {
         return produto;
     }
 
+
     public Produto save(Produto produto) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -60,6 +62,7 @@ public class ProdutoDAO {
         }
         return produto;
     }
+
 
     public Produto update(Produto produto) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -87,9 +90,9 @@ public class ProdutoDAO {
         }finally {
             em.close();
         }
-
         return produtoManaged;
     }
+
 
     public Produto delete(Long id) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -115,6 +118,7 @@ public class ProdutoDAO {
         return produto;
     }
 
+
     private boolean produtoIsValid(Produto produto) {
         try {
             if ( (produto.getNome().isEmpty()) || (produto.getQuantidade() < 0) )
@@ -127,4 +131,47 @@ public class ProdutoDAO {
         return true;
     }
 
+
+    public List<Produto> getByPagination(int firstResult, int maxResults) {
+        List<Produto> produtos;
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            produtos = em.createQuery("select p from Produto p", Produto.class)
+                    .setFirstResult(firstResult - 1)
+                    .setMaxResults(maxResults)
+                    .getResultList();
+        } catch (RuntimeException ex) {
+            throw new DAOException("Erro ao buscar produtos no banco de dados: " + ex.getMessage(), ErrorCode.SERVER_ERROR.getCode());
+        } finally {
+            em.close();
+        }
+
+        if (produtos.isEmpty()) {
+            throw new DAOException("Pagina com produtos vazia.", ErrorCode.NOT_FOUND.getCode());
+        }
+
+        return produtos;
+    }
+
+
+    public List<Produto> getByName(String name) {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<Produto> produtos = null;
+
+        try {
+            produtos = em.createQuery("select p from Produto p where p.nome like :name", Produto.class)
+                    .setParameter("name", "%" + name + "%")
+                    .getResultList();
+        } catch (RuntimeException ex) {
+            throw new DAOException("Erro ao buscar produtos por nome no banco de dados: " + ex.getMessage(), ErrorCode.SERVER_ERROR.getCode());
+        } finally {
+            em.close();
+        }
+
+        if (produtos.isEmpty()) {
+            throw new DAOException("A consulta nao encontrou produtos.", ErrorCode.NOT_FOUND.getCode());
+        }
+        return produtos;
+    }
 }
