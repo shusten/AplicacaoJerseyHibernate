@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import br.com.cov.webservice.model.domain.Produto;
+import br.com.cov.webservice.resources.beans.ProdutoFilterBean;
 import br.com.cov.webservice.service.ProdutoService;
 
 @Path("/produtos")
@@ -18,9 +19,11 @@ public class ProdutoResource {
     private ProdutoService service = new ProdutoService();
 
     @GET
-    public List<Produto> getProdutos(@QueryParam("name") String name) {
-        if (name != null) {
-            return service.getProdutoByName(name);
+    public List<Produto> getProdutos(@BeanParam ProdutoFilterBean produtoFilter) {
+        if ( ( produtoFilter.getOffset() >= 0 ) && ( produtoFilter.getLimit() > 0 ) ) {
+            return service.getProdutosByPagination(produtoFilter.getOffset(), produtoFilter.getLimit());
+        } if ( produtoFilter.getName() != null ) {
+            return service.getProdutoByName(produtoFilter.getName());
         }
         return service.getProdutos();
     }
