@@ -1,18 +1,13 @@
 package br.com.cov.webservice.exceptions;
-
-import org.glassfish.jersey.internal.Errors;
-import org.hibernate.loader.plan.spi.Return;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 import br.com.cov.webservice.model.domain.ErrorMessage;
 
+@Provider
 public class DAOExceptionMapper implements ExceptionMapper<DAOException> {
 
     @Override
