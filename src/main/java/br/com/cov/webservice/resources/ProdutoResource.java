@@ -19,43 +19,41 @@ import br.com.cov.webservice.model.domain.Produto;
 import br.com.cov.webservice.service.ProdutoService;
 
 @Path("/produtos")
+@Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
+@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 public class ProdutoResource {
 
     private ProdutoService service = new ProdutoService();
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public List<Produto> getProdutos() {
         return service.getProdutos();
     }
 
     @GET
     @Path("{produtoId}")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Produto getProduto(@PathParam("produtoId") long id) {
         return service.getProduto(id);
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Produto save(Produto produto) {
-        return service.saveProduto(produto);
+    public Response save(Produto produto) {
+        produto = service.saveProduto(produto);
+        return  Response.status(Status.CREATED)
+                .entity(produto)
+                .build();
     }
 
     @PUT
     @Path("{produtoId}")
-    @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Produto update(@PathParam("produtoId") long id, Produto produto) {
+    public void update(@PathParam("produtoId") long id, Produto produto) {
         produto.setId(id);
-        return service.updateProduto(produto);
+         service.updateProduto(produto);
     }
 
     @DELETE
     @Path("{produtoId}")
-    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Produto delete(@PathParam("produtoId") long id) {
-        return service.deleteProduto(id);
+    public void delete(@PathParam("produtoId") long id) {
+        service.deleteProduto(id);
     }
 }
