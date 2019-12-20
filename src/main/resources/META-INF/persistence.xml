@@ -1,4 +1,4 @@
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+﻿<persistence xmlns="http://java.sun.com/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
@@ -7,14 +7,13 @@
     <persistence-unit name="webservice" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-
-        <class>br.com.cov.webservice.model.domain.Produto</class>
+         <class>br.com.cov.webservice.model.domain.Produto</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"
                       value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/webservice?createDatabaseIfNotExist=true"/>
+                      value="jdbc:mysql://localhost:3306/dbwebservice?createDatabaseIfNotExist=true"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value="PXGwE!-0Eb)o"/>
 
